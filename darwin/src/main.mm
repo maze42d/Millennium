@@ -1,5 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
+#import <UserNotifications/UserNotifications.h>
 #include <CoreServices/CoreServices.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <Carbon/Carbon.h>
@@ -61,6 +62,29 @@ int main(int argc, const char * argv[])
             }
         }
     }
+
+    // First request permission
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound)
+                        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            // Permission granted
+        }
+    }];
+
+    // Create and show notification
+    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+    content.title = @"Notification Title";
+    content.body = @"This is the notification body";
+    content.sound = [UNNotificationSound defaultSound];
+
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"LocalNotification" content:content trigger:nil];
+
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+    }];
 
     LOG_INFO("Starting Millennium Steam sniper...");
     signal(SIGINT, SignalHandler);

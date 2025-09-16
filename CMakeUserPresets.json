@@ -77,6 +77,51 @@
 			}
 		},
 		{
+			"name": "xcode-debug",
+			"binaryDir": "${sourceDir}/build-xcode",
+			"generator": "Xcode",
+			"displayName": "Xcode Debug",
+			"description": "Xcode project for debugging",
+			"architecture": {
+				"value": "arm64",
+				"strategy": "external"
+			},
+			"cacheVariables": {
+				"CMAKE_TOOLCHAIN_FILE": "./vendor/vcpkg/scripts/buildsystems/vcpkg.cmake",
+				"CMAKE_BUILD_TYPE": "Debug",
+				"VCPKG_TARGET_TRIPLET": "arm64-osx-dynamic"
+			}
+		},
+		{
+			"name": "xcode-release",
+			"binaryDir": "${sourceDir}/build-xcode",
+			"generator": "Xcode",
+			"displayName": "Xcode Release",
+			"description": "Xcode project for release builds",
+			"architecture": {
+				"value": "arm64",
+				"strategy": "external"
+			},
+			"cacheVariables": {
+				"CMAKE_TOOLCHAIN_FILE": "./vendor/vcpkg/scripts/buildsystems/vcpkg.cmake",
+				"CMAKE_BUILD_TYPE": "Release",
+				"VCPKG_TARGET_TRIPLET": "arm64-osx-dynamic"
+			}
+		},
+		{
+			"name": "xcode-universal",
+			"binaryDir": "${sourceDir}/build-xcode-universal",
+			"generator": "Xcode",
+			"displayName": "Xcode Universal",
+			"description": "Xcode project for universal binaries (x86_64 + arm64)",
+			"cacheVariables": {
+				"CMAKE_TOOLCHAIN_FILE": "./vendor/vcpkg/scripts/buildsystems/vcpkg.cmake",
+				"CMAKE_OSX_ARCHITECTURES": "x86_64;arm64",
+				"VCPKG_TARGET_TRIPLET": "arm64-osx-dynamic",
+				"CMAKE_CXX_COMPILER": "clang++"
+			}
+		},
+		{
 			"name": "linux-debug",
 			"inherits": "default",
 			"generator": "Ninja",
